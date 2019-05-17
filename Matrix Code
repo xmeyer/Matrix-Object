@@ -1,0 +1,42 @@
+class Matrix():
+    def __init__(self, L):
+        self.a = float(L[0][0])
+        self.b = float(L[0][1])
+        self.c = float(L[1][0])
+        self.d = float(L[1][1])
+
+    def __str__(self):
+        return "[[%f,%f]\n[%f,%f]]" % (self.a, self.b, self.c, self.d)
+
+    def determinant(self):
+        D = (self.a * self.d) - (self.b * self.c)
+        return D
+
+    def trace(self):
+        return self.a + self.d
+
+    def inverse(self):
+        D = self.determinant()
+        inverse = Matrix([[self.d/D, - self.b/D], [- self.c/D, self.a/D]])
+        return inverse
+
+    def characteristic_polynomial(self):
+        T = self.trace()
+        D = self.determinant()
+        return "x**2 - "+ str(T) + " * x + " + str(D)
+
+    def matrix_product(self, other):  # new matrix acts as other
+         return Matrix([[self.a*other.a + self.b*other.c, self.a*other.b + self.b*other.d],
+                 [self.c*other.a + self.d*other.c, self.c*other.b + self.d*other.d]])
+
+def main():
+    M = Matrix([[1,2],[3,4]])
+    B = Matrix([[2,1],[4,3]])
+    print('Matrix:', M)
+    print('Matrix Determinant:', M.determinant())
+    # if abs(D) < 0.000000000001  # D is determinant
+    print('Matrix Trace:', M.trace())
+    print('Matrix Inverse:', M.inverse())
+    print('Matrix Characteristic Polynomial:', M.characteristic_polynomial())
+    print('Matrix Product:', M.matrix_product(B))
+main()
